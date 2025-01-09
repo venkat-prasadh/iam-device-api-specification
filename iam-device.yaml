@@ -1,0 +1,715 @@
+openapi: 3.0.0
+info:
+  title: IAM Device API
+  version: 1.0.0
+paths:
+  /devices:
+    post:
+      summary: Create Device
+      description: Create a Device
+      parameters:
+        - name: accountId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: groupId
+          in: query
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                serialNumber:
+                  type: string
+                model:
+                  type: string
+                manufacturer:
+                  type: string
+                firmware:
+                  type: string
+                description:
+                  type: string
+                csr:
+                    type: string
+                certCommonName:
+                  type: string
+                publicCert:
+                  type: string
+                caCertOrigin:
+                  type: string
+            examples:
+              "Without Certificate":
+                value:
+                  serialNumber: "serialNumber"
+                  model: "model"
+                  manufacturer: "manufacturer"
+                  firmware: "firmware"
+                  description: "description"
+              "Cloud Core Certificate":
+                value:
+                  serialNumber: "serialNumber"
+                  model: "model"
+                  manufacturer: "manufacturer"
+                  firmware: "firmware"
+                  description: "description"
+                  certCommonName: "commonName"
+              "CSR":
+                value:
+                  serialNumber: "serialNumber"
+                  model: "model"
+                  manufacturer: "manufacturer"
+                  firmware: "firmware"
+                  description: "description"
+                  csr: "csr"
+              "External Certificate":
+                value:
+                  serialNumber: "serialNumber"
+                  model: "model"
+                  manufacturer: "manufacturer"
+                  firmware: "firmware"
+                  description: "description"
+                  publicCert: "cert"
+                  caCertOrigin: "origin"
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  serialNumber:
+                    type: string
+                  model:
+                    type: string
+                  manufacturer:
+                    type: string
+                  firmware:
+                    type: string
+                  description:
+                    type: string
+                  certificate:
+                    type: string
+                  metadata:
+                    type: object
+                    properties:
+                      createdByUserTrn:
+                        type: string
+                      createdAtDateTime:
+                        type: string
+                        format: date-time
+                      createdByApplicationTrn:
+                        type: string
+                      createdByDeviceTrn:
+                        type: string
+                      updatedByUserTrn:
+                        type: string
+                      updatedAtDateTime:
+                        type: string
+                        format: date-time
+                      updatedByApplicationTrn:
+                        type: string
+                      updatedByDeviceTrn:
+                        type: string
+                      deletedByUserTrn:
+                        type: string
+                      deletedAtDateTime:
+                        type: string
+                        format: date-time
+                      deletedByApplicationTrn:
+                        type: string
+                      deletedByDeviceTrn:
+                        type: string
+      tags:
+        - Device
+    get:
+      tags:
+        - Device
+      summary: List Devices
+      description: List all devices that belong to an account
+      parameters:
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: accountId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  links:
+                    type: object
+                    properties:
+                      prev:
+                        type: string
+                      first:
+                        type: string
+                      next:
+                        type: string
+                      self:
+                        type: string
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        serialNumber:
+                          type: string
+                        model:
+                          type: string
+                        manufacturer:
+                          type: string
+                        firmware:
+                          type: string
+                        certificate:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              thumbprint:
+                                type: string
+                        metadata:
+                          type: object
+                          properties:
+                            createdByUserTrn:
+                              type: string
+                            createdAtDateTime:
+                              type: string
+                              format: date-time
+                            createdByApplicationTrn:
+                              type: string
+                            createdByDeviceTrn:
+                              type: string
+                            updatedByUser:
+                              type: string
+                            updatedAtDateTime:
+                              type: string
+                              format: date-time
+                            updatedByApplicationTrn:
+                              type: string
+                            updatedByDeviceTrn:
+                              type: string
+                            deletedByUserTrn:
+                              type: string
+                            deletedAtDateTime:
+                              type: string
+                              format: date-time
+                            deletedByApplicationTrn:
+                              type: string
+                            deletedByDeviceTrn:
+                              type: string
+  /devices/{deviceId}:
+    patch:
+      tags:
+        - Device
+      summary: Update Device
+      description: Update a Device
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                serialNumber:
+                    type: string
+                model:
+                  type: string
+                manufacturer:
+                  type: string
+                firmware:
+                  type: string
+                description:
+                  type: string
+                
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  serialNumber:
+                    type: string
+                  model:
+                    type: string
+                  manufacturer:
+                    type: string
+                  firmware:
+                    type: string
+                  certificate:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        thumbprint:
+                          type: string
+                  metadata:
+                    type: object
+                    properties:
+                      createdByUserTrn:
+                        type: string
+                      createdAtDateTime:
+                        type: string
+                        format: date-time
+                      createdByApplicationTrn:
+                        type: string
+                      createdByDeviceTrn:
+                        type: string
+                      updatedByUserTrn:
+                        type: string
+                      updatedAtDateTime:
+                        type: string
+                        format: date-time
+                      updatedByApplicationTrn:
+                        type: string
+                      updatedByDeviceTrn:
+                        type: string
+                      deletedByUserTrn:
+                        type: string
+                      deletedAtDateTime:
+                        type: string
+                        format: date-time
+                      deletedByApplicationTrn:
+                        type: string
+                      deletedByDeviceTrn:
+                        type: string
+    get:
+      tags:
+        - Device
+      summary: Get Device
+      description: Retrieve a Device
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  serialNumber:
+                    type: string
+                  model:
+                    type: string
+                  manufacturer:
+                    type: string
+                  firmware:
+                    type: string
+                  accountId:
+                    type: string
+                  certificate:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                        thumbprint:
+                          type: string
+                  metadata:
+                    type: object
+                    properties:
+                      createdByUserTrn:
+                        type: string
+                      createdAtDateTime:
+                        type: string
+                        format: date-time
+                      createdByApplicationTrn:
+                        type: string
+                      createdByDeviceTrn:
+                        type: string
+                      updatedByUserTrn:
+                        type: string
+                      updatedAtDateTime:
+                        type: string
+                        format: date-time
+                      updatedByApplicationTrn:
+                        type: string
+                      updatedByDeviceTrn:
+                        type: string
+                      deletedByUserTrn:
+                        type: string
+                      deletedAtDateTime:
+                        type: string
+                        format: date-time
+                      deletedByApplicationTrn:
+                        type: string
+                      deletedByDeviceTrn:
+                        type: string
+    delete:
+      tags:
+        - Device
+      summary: Delete Device
+      description: Delete a Device
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+
+  /devices/{deviceId}/groups:
+    post:
+      tags:
+          - Group Association
+      summary: Associate Device with Group
+      description: Associate a Device with a group
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  metadata:
+                    type: object
+                    properties:
+                      createdByUserTrn:
+                        type: string
+                      createdAtDateTime:
+                        type: string
+                        format: date-time
+                      createdByApplicationTrn:
+                        type: string
+                      createdByDeviceTrn:
+                        type: string
+                      updatedByUserTrn:
+                        type: string
+                      updatedAtDateTime:
+                        type: string
+                        format: date-time
+                      updatedByApplicationTrn:
+                        type: string
+                      updatedByDeviceTrn:
+                        type: string
+                      deletedByUserTrn:
+                        type: string
+                      deletedAtDateTime:
+                        type: string
+                        format: date-time
+                      deletedByApplicationTrn:
+                        type: string
+                      deletedByDeviceTrn:
+                        type: string
+    get:
+      tags:
+          - Group Association
+      summary: Get Groups associated with Device
+      description: Get groups associated to a device
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  links:
+                    type: object
+                    properties:
+                      prev:
+                        type: string
+                      first:
+                        type: string
+                      next:
+                        type: string
+                      self:
+                        type: string
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        metadata:
+                          type: object
+                          properties:
+                            createdByUserTrn:
+                              type: string
+                            createdAtDateTime:
+                              type: string
+                              format: date-time
+                            createdByApplicationTrn:
+                              type: string
+                            createdByDeviceTrn:
+                              type: string
+                            updatedByUserTrn:
+                              type: string
+                            updatedAtDateTime:
+                              type: string
+                              format: date-time
+                            updatedByApplicationTrn:
+                              type: string
+                            updatedByDeviceTrn:
+                              type: string
+                            deletedByUserTrn:
+                              type: string
+                            deletedAtDateTime:
+                              type: string
+                              format: date-time
+                            deletedByApplicationTrn:
+                              type: string
+                            deletedByDeviceTrn:
+                              type: string
+  /devices/{deviceId}/groups/{groupId}:
+    delete:
+      tags:
+          - Group Association
+      summary: Delete Group Association with Device
+      description: Removes association of a device with group
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+
+  /devices/{deviceId}/certificates:
+    post:
+      tags:
+          - Certificate Association
+      summary: Associate Device with Certificate
+      description: Associate a Device with a certificate
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                certCommonName:
+                  type: string
+                csr:
+                  type: string
+                caCertOrigin:
+                  type: string
+                publicCert:
+                  type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  certificate:
+                    type: string
+                  name:
+                    type: string
+                  expiryAtDateTime:
+                    type: string
+                    format: date-time
+                  thumbprint:
+                    type: string
+                  metadata:
+                    type: object
+                    properties:
+                      createdByUserTrn:
+                        type: string
+                      createdAtDateTime:
+                        type: string
+                        format: date-time
+                      createdByApplicationTrn:
+                        type: string
+                      createdByDeviceTrn:
+                        type: string
+                      updatedByUserTrn:
+                        type: string
+                      updatedAtDateTime:
+                        type: string
+                        format: date-time
+                      updatedByApplicationTrn:
+                        type: string
+                      updatedByDeviceTrn:
+                        type: string
+                      deletedByUserTrn:
+                        type: string
+                      deletedAtDateTime:
+                        type: string
+                        format: date-time
+                      deletedByApplicationTrn:
+                        type: string
+                      deletedByDeviceTrn:
+                        type: string
+    get:
+      tags:
+          - Certificate Association
+      summary: Get Certificates associated with Device
+      description: Get certificates associated to a device
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  links:
+                    type: object
+                    properties:
+                      prev:
+                        type: string
+                      first:
+                        type: string
+                      next:
+                        type: string
+                      self:
+                        type: string
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        certificate:
+                          type: string
+                        name:
+                          type: string
+                        expiryAtDateTime:
+                          type: string
+                          format: date-time
+                        thumbprint:
+                          type: string
+                        metadata:
+                          type: object
+                          properties:
+                            createdByUserTrn:
+                              type: string
+                            createdAtDateTime:
+                              type: string
+                              format: date-time
+                            createdByApplicationTrn:
+                              type: string
+                            createdByDeviceTrn:
+                              type: string
+                            updatedByUserTrn:
+                              type: string
+                            updatedAtDateTime:
+                              type: string
+                              format: date-time
+                            updatedByApplicationTrn:
+                              type: string
+                            updatedByDeviceTrn:
+                              type: string
+                            deletedByUserTrn:
+                              type: string
+                            deletedAtDateTime:
+                              type: string
+                              format: date-time
+                            deletedByApplicationTrn:
+                              type: string
+                            deletedByDeviceTrn:
+                              type: string
+    delete:
+      tags:
+          - Certificate Association
+      summary: Delete Certificate
+      description: Removes association of a device with certificate and deletes the certificate
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: thumbprint
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content

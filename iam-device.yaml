@@ -110,11 +110,6 @@ paths:
                       updatedAt:
                         type: string
                         format: date-time
-                      deletedBy:
-                        type: string
-                      deletedAt:
-                        type: string
-                        format: date-time
       tags:
         - Device
     get:
@@ -194,11 +189,6 @@ paths:
                             updatedAt:
                               type: string
                               format: date-time
-                            deletedBy:
-                              type: string
-                            deletedAt:
-                              type: string
-                              format: date-time
   /devices/{deviceId}:
     patch:
       tags:
@@ -269,11 +259,6 @@ paths:
                       updatedAt:
                         type: string
                         format: date-time
-                      deletedBy:
-                        type: string
-                      deletedAt:
-                        type: string
-                        format: date-time
     get:
       tags:
         - Device
@@ -323,11 +308,6 @@ paths:
                       updatedBy:
                         type: string
                       updatedAt:
-                        type: string
-                        format: date-time
-                      deletedBy:
-                        type: string
-                      deletedAt:
                         type: string
                         format: date-time
     delete:
@@ -398,11 +378,6 @@ paths:
                             updatedAt:
                               type: string
                               format: date-time
-                            deletedBy:
-                              type: string
-                            deletedAt:
-                              type: string
-                              format: date-time
 
   /devices/{deviceId}/certificates:
     post:
@@ -461,11 +436,6 @@ paths:
                       updatedAt:
                         type: string
                         format: date-time
-                      deletedBy:
-                        type: string
-                      deletedAt:
-                        type: string
-                        format: date-time
     get:
       tags:
           - Certificate Association
@@ -521,11 +491,6 @@ paths:
                             updatedBy:
                               type: string
                             updatedAt:
-                              type: string
-                              format: date-time
-                            deletedBy:
-                              type: string
-                            deletedAt:
                               type: string
                               format: date-time
   /devices/{deviceId}/certificates/{thumbprint}:

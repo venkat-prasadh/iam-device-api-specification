@@ -100,33 +100,21 @@ paths:
                   metadata:
                     type: object
                     properties:
-                      createdByUserTrn:
+                      createdBy:
                         type: string
-                      createdAtDateTime:
-                        type: string
-                        format: date-time
-                      createdByApplicationTrn:
-                        type: string
-                      createdByDeviceTrn:
-                        type: string
-                      updatedByUserTrn:
-                        type: string
-                      updatedAtDateTime:
+                      createdAt:
                         type: string
                         format: date-time
-                      updatedByApplicationTrn:
+                      updatedBy:
                         type: string
-                      updatedByDeviceTrn:
-                        type: string
-                      deletedByUserTrn:
-                        type: string
-                      deletedAtDateTime:
+                      updatedAt:
                         type: string
                         format: date-time
-                      deletedByApplicationTrn:
+                      deletedBy:
                         type: string
-                      deletedByDeviceTrn:
+                      deletedAt:
                         type: string
+                        format: date-time
       tags:
         - Device
     get:
@@ -184,7 +172,7 @@ paths:
                           type: string
                         firmware:
                           type: string
-                        certificate:
+                        certificates:
                           type: array
                           items:
                             type: object
@@ -196,33 +184,21 @@ paths:
                         metadata:
                           type: object
                           properties:
-                            createdByUserTrn:
+                            createdBy:
                               type: string
-                            createdAtDateTime:
-                              type: string
-                              format: date-time
-                            createdByApplicationTrn:
-                              type: string
-                            createdByDeviceTrn:
-                              type: string
-                            updatedByUser:
-                              type: string
-                            updatedAtDateTime:
+                            createdAt:
                               type: string
                               format: date-time
-                            updatedByApplicationTrn:
+                            updatedBy:
                               type: string
-                            updatedByDeviceTrn:
-                              type: string
-                            deletedByUserTrn:
-                              type: string
-                            deletedAtDateTime:
+                            updatedAt:
                               type: string
                               format: date-time
-                            deletedByApplicationTrn:
+                            deletedBy:
                               type: string
-                            deletedByDeviceTrn:
+                            deletedAt:
                               type: string
+                              format: date-time
   /devices/{deviceId}:
     patch:
       tags:
@@ -243,7 +219,7 @@ paths:
               type: object
               properties:
                 serialNumber:
-                    type: string
+                  type: string
                 model:
                   type: string
                 manufacturer:
@@ -271,7 +247,7 @@ paths:
                     type: string
                   firmware:
                     type: string
-                  certificate:
+                  certificates:
                     type: array
                     items:
                       type: object
@@ -283,33 +259,21 @@ paths:
                   metadata:
                     type: object
                     properties:
-                      createdByUserTrn:
+                      createdBy:
                         type: string
-                      createdAtDateTime:
-                        type: string
-                        format: date-time
-                      createdByApplicationTrn:
-                        type: string
-                      createdByDeviceTrn:
-                        type: string
-                      updatedByUserTrn:
-                        type: string
-                      updatedAtDateTime:
+                      createdAt:
                         type: string
                         format: date-time
-                      updatedByApplicationTrn:
+                      updatedBy:
                         type: string
-                      updatedByDeviceTrn:
-                        type: string
-                      deletedByUserTrn:
-                        type: string
-                      deletedAtDateTime:
+                      updatedAt:
                         type: string
                         format: date-time
-                      deletedByApplicationTrn:
+                      deletedBy:
                         type: string
-                      deletedByDeviceTrn:
+                      deletedAt:
                         type: string
+                        format: date-time
     get:
       tags:
         - Device
@@ -339,9 +303,7 @@ paths:
                     type: string
                   firmware:
                     type: string
-                  accountId:
-                    type: string
-                  certificate:
+                  certificates:
                     type: array
                     items:
                       type: object
@@ -353,33 +315,21 @@ paths:
                   metadata:
                     type: object
                     properties:
-                      createdByUserTrn:
+                      createdBy:
                         type: string
-                      createdAtDateTime:
-                        type: string
-                        format: date-time
-                      createdByApplicationTrn:
-                        type: string
-                      createdByDeviceTrn:
-                        type: string
-                      updatedByUserTrn:
-                        type: string
-                      updatedAtDateTime:
+                      createdAt:
                         type: string
                         format: date-time
-                      updatedByApplicationTrn:
+                      updatedBy:
                         type: string
-                      updatedByDeviceTrn:
-                        type: string
-                      deletedByUserTrn:
-                        type: string
-                      deletedAtDateTime:
+                      updatedAt:
                         type: string
                         format: date-time
-                      deletedByApplicationTrn:
+                      deletedBy:
                         type: string
-                      deletedByDeviceTrn:
+                      deletedAt:
                         type: string
+                        format: date-time
     delete:
       tags:
         - Device
@@ -396,66 +346,6 @@ paths:
           description: No Content
 
   /devices/{deviceId}/groups:
-    post:
-      tags:
-          - Group Association
-      summary: Associate Device with Group
-      description: Associate a Device with a group
-      parameters:
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: string
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  metadata:
-                    type: object
-                    properties:
-                      createdByUserTrn:
-                        type: string
-                      createdAtDateTime:
-                        type: string
-                        format: date-time
-                      createdByApplicationTrn:
-                        type: string
-                      createdByDeviceTrn:
-                        type: string
-                      updatedByUserTrn:
-                        type: string
-                      updatedAtDateTime:
-                        type: string
-                        format: date-time
-                      updatedByApplicationTrn:
-                        type: string
-                      updatedByDeviceTrn:
-                        type: string
-                      deletedByUserTrn:
-                        type: string
-                      deletedAtDateTime:
-                        type: string
-                        format: date-time
-                      deletedByApplicationTrn:
-                        type: string
-                      deletedByDeviceTrn:
-                        type: string
     get:
       tags:
           - Group Association
@@ -498,53 +388,21 @@ paths:
                         metadata:
                           type: object
                           properties:
-                            createdByUserTrn:
+                            createdBy:
                               type: string
-                            createdAtDateTime:
-                              type: string
-                              format: date-time
-                            createdByApplicationTrn:
-                              type: string
-                            createdByDeviceTrn:
-                              type: string
-                            updatedByUserTrn:
-                              type: string
-                            updatedAtDateTime:
+                            createdAt:
                               type: string
                               format: date-time
-                            updatedByApplicationTrn:
+                            updatedBy:
                               type: string
-                            updatedByDeviceTrn:
-                              type: string
-                            deletedByUserTrn:
-                              type: string
-                            deletedAtDateTime:
+                            updatedAt:
                               type: string
                               format: date-time
-                            deletedByApplicationTrn:
+                            deletedBy:
                               type: string
-                            deletedByDeviceTrn:
+                            deletedAt:
                               type: string
-  /devices/{deviceId}/groups/{groupId}:
-    delete:
-      tags:
-          - Group Association
-      summary: Delete Group Association with Device
-      description: Removes association of a device with group
-      parameters:
-        - name: groupId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: deviceId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: No Content
+                              format: date-time
 
   /devices/{deviceId}/certificates:
     post:
@@ -593,33 +451,21 @@ paths:
                   metadata:
                     type: object
                     properties:
-                      createdByUserTrn:
+                      createdBy:
                         type: string
-                      createdAtDateTime:
-                        type: string
-                        format: date-time
-                      createdByApplicationTrn:
-                        type: string
-                      createdByDeviceTrn:
-                        type: string
-                      updatedByUserTrn:
-                        type: string
-                      updatedAtDateTime:
+                      createdAt:
                         type: string
                         format: date-time
-                      updatedByApplicationTrn:
+                      updatedBy:
                         type: string
-                      updatedByDeviceTrn:
-                        type: string
-                      deletedByUserTrn:
-                        type: string
-                      deletedAtDateTime:
+                      updatedAt:
                         type: string
                         format: date-time
-                      deletedByApplicationTrn:
+                      deletedBy:
                         type: string
-                      deletedByDeviceTrn:
+                      deletedAt:
                         type: string
+                        format: date-time
     get:
       tags:
           - Certificate Association
@@ -667,33 +513,22 @@ paths:
                         metadata:
                           type: object
                           properties:
-                            createdByUserTrn:
+                            createdBy:
                               type: string
-                            createdAtDateTime:
-                              type: string
-                              format: date-time
-                            createdByApplicationTrn:
-                              type: string
-                            createdByDeviceTrn:
-                              type: string
-                            updatedByUserTrn:
-                              type: string
-                            updatedAtDateTime:
+                            createdAt:
                               type: string
                               format: date-time
-                            updatedByApplicationTrn:
+                            updatedBy:
                               type: string
-                            updatedByDeviceTrn:
-                              type: string
-                            deletedByUserTrn:
-                              type: string
-                            deletedAtDateTime:
+                            updatedAt:
                               type: string
                               format: date-time
-                            deletedByApplicationTrn:
+                            deletedBy:
                               type: string
-                            deletedByDeviceTrn:
+                            deletedAt:
                               type: string
+                              format: date-time
+  /devices/{deviceId}/certificates/{thumbprint}:
     delete:
       tags:
           - Certificate Association
@@ -706,7 +541,7 @@ paths:
           schema:
             type: string
         - name: thumbprint
-          in: query
+          in: path
           required: true
           schema:
             type: string

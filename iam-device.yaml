@@ -10,13 +10,15 @@ paths:
       parameters:
         - name: accountId
           in: query
-          required: true
+          required: false
           schema:
             type: string
+            format: uuid
         - name: groupId
           in: query
           schema:
             type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -34,47 +36,6 @@ paths:
                   type: string
                 description:
                   type: string
-                csr:
-                    type: string
-                certCommonName:
-                  type: string
-                publicCert:
-                  type: string
-                caCertOrigin:
-                  type: string
-            examples:
-              "Without Certificate":
-                value:
-                  serialNumber: "serialNumber"
-                  model: "model"
-                  manufacturer: "manufacturer"
-                  firmware: "firmware"
-                  description: "description"
-              "Cloud Core Certificate":
-                value:
-                  serialNumber: "serialNumber"
-                  model: "model"
-                  manufacturer: "manufacturer"
-                  firmware: "firmware"
-                  description: "description"
-                  certCommonName: "commonName"
-              "CSR":
-                value:
-                  serialNumber: "serialNumber"
-                  model: "model"
-                  manufacturer: "manufacturer"
-                  firmware: "firmware"
-                  description: "description"
-                  csr: "csr"
-              "External Certificate":
-                value:
-                  serialNumber: "serialNumber"
-                  model: "model"
-                  manufacturer: "manufacturer"
-                  firmware: "firmware"
-                  description: "description"
-                  publicCert: "cert"
-                  caCertOrigin: "origin"
       responses:
         '201':
           description: Created
@@ -94,8 +55,6 @@ paths:
                   firmware:
                     type: string
                   description:
-                    type: string
-                  certificate:
                     type: string
                   metadata:
                     type: object
@@ -128,6 +87,7 @@ paths:
           required: false
           schema:
             type: string
+            format: uuid
         - name: pageSize
           in: query
           required: false
@@ -159,6 +119,7 @@ paths:
                       properties:
                         id:
                           type: string
+                          format: uuid
                         serialNumber:
                           type: string
                         model:
@@ -167,17 +128,10 @@ paths:
                           type: string
                         firmware:
                           type: string
-                        certificates:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              name:
-                                type: string
-                              thumbprint:
-                                type: string
                         metadata:
                           type: object
+                        description:
+                          type: string
                           properties:
                             createdBy:
                               type: string
@@ -229,6 +183,7 @@ paths:
                 properties:
                   id:
                     type: string
+                    format: uuid
                   serialNumber:
                     type: string
                   model:
@@ -237,15 +192,6 @@ paths:
                     type: string
                   firmware:
                     type: string
-                  certificates:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                        thumbprint:
-                          type: string
                   metadata:
                     type: object
                     properties:
@@ -280,6 +226,7 @@ paths:
                 properties:
                   id:
                     type: string
+                    format: uuid
                   serialNumber:
                     type: string
                   model:
@@ -288,15 +235,8 @@ paths:
                     type: string
                   firmware:
                     type: string
-                  certificates:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        name:
-                          type: string
-                        thumbprint:
-                          type: string
+                  description:
+                    type: string
                   metadata:
                     type: object
                     properties:
@@ -363,6 +303,7 @@ paths:
                       properties:
                         id:
                           type: string
+                          format: uuid
                         name:
                           type: string
                         metadata:
@@ -406,6 +347,17 @@ paths:
                   type: string
                 publicCert:
                   type: string
+            examples:
+              "Cloud Core Certificate":
+                value:
+                  certCommonName: "commonName"
+              "CSR":
+                value:
+                  csr: "csr"
+              "External Certificate":
+                value:
+                  publicCert: "cert"
+                  caCertOrigin: "origin"
       responses:
         '201':
           description: Created
@@ -414,6 +366,8 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: string
                   certificate:
                     type: string
                   name:
@@ -430,12 +384,7 @@ paths:
                         type: string
                       createdAt:
                         type: string
-                        format: date-time
-                      updatedBy:
-                        type: string
-                      updatedAt:
-                        type: string
-                        format: date-time
+                        format: date-
     get:
       tags:
           - Certificate Association
@@ -471,6 +420,9 @@ paths:
                     items:
                       type: object
                       properties:
+                        id:
+                          type: string
+                          format: uuid
                         certificate:
                           type: string
                         name:
@@ -488,12 +440,7 @@ paths:
                             createdAt:
                               type: string
                               format: date-time
-                            updatedBy:
-                              type: string
-                            updatedAt:
-                              type: string
-                              format: date-time
-  /devices/{deviceId}/certificates/{thumbprint}:
+  /devices/{deviceId}/certificates/{certificateId}:
     delete:
       tags:
           - Certificate Association
@@ -505,11 +452,13 @@ paths:
           required: true
           schema:
             type: string
-        - name: thumbprint
+            format: uuid
+        - name: certificateId
           in: path
           required: true
           schema:
             type: string
+            format: uuid
       responses:
         '204':
           description: No Content

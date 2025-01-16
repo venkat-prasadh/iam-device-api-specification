@@ -6,7 +6,13 @@ paths:
   /devices:
     post:
       summary: Create Device
-      description: This endpoint is used to create a new device within a specific account. Each device must have a unique combination of serial number, model, and manufacturer. Optionally, the device can be associated with one or more groups.
+      description: |  
+        This endpoint is used to create a new device within a specific account. Each device must have a unique combination of serial number, model, and manufacturer. Optionally, the device can be associated with one or more groups.
+      
+        **Note:** Changes in the specification are anticipated for the following reasons
+        - *The definition of groups and their association with devices is being refined*
+        - *The definition of the model is being improved to enhance data integrity*
+      
       parameters:
         - name: accountId
           in: query
@@ -74,7 +80,11 @@ paths:
       tags:
         - Device
       summary: Update Device
-      description: This endpoint allows updating the details of an existing device. The device is identified by its unique identifier provided in the path parameter. The request body must include the updated details of the device. It is useful for modifying device attributes such as model, manufacturer, firmware, and description.
+      description: |
+        This endpoint allows updating the details of an existing device. The device is identified by its unique identifier provided in the path parameter. The request body must include the updated details of the device. It is useful for modifying device attributes such as model, manufacturer, firmware, and description.
+        
+        **Note:** Changes in the specification are anticipated for the following reason
+        - *The definition of the model is being improved to enhance data integrity*
       parameters:
         - name: deviceId
           in: path

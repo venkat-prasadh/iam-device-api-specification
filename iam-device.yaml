@@ -6,459 +6,407 @@ paths:
   /devices:
     post:
       summary: Create Device
-      description: Create a Device
+      description: Creates a new device with the provided details.
       parameters:
         - name: accountId
           in: query
           required: false
+          description: Unique Identifier of an account.
           schema:
             type: string
             format: uuid
         - name: groupId
           in: query
+          description: Unique Identifier of a group.
           schema:
             type: string
             format: uuid
       requestBody:
         required: true
+        description: Object containing details about the device to be created.
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                serialNumber:
-                  type: string
-                model:
-                  type: string
-                manufacturer:
-                  type: string
-                firmware:
-                  type: string
-                description:
-                  type: string
+              $ref: '#/components/schemas/DeviceCreateRequest'
       responses:
         '201':
-          description: Created
+          description: Device successfully created.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  serialNumber:
-                    type: string
-                  model:
-                    type: string
-                  manufacturer:
-                    type: string
-                  firmware:
-                    type: string
-                  description:
-                    type: string
-                  metadata:
-                    type: object
-                    properties:
-                      createdBy:
-                        type: string
-                      createdAt:
-                        type: string
-                        format: date-time
-                      updatedBy:
-                        type: string
-                      updatedAt:
-                        type: string
-                        format: date-time
+                $ref: '#/components/schemas/DeviceResponse'
       tags:
         - Device
     get:
       tags:
         - Device
       summary: List Devices
-      description: List all devices that belong to an account
+      description: List all devices that belong to an account.
       parameters:
         - name: q
           in: query
           required: false
+          description: Query string for searching devices.
           schema:
             type: string
         - name: accountId
           in: query
           required: false
+          description: Unique Identifier of an account.
           schema:
             type: string
             format: uuid
         - name: pageSize
           in: query
           required: false
+          description: Number of devices to return per page.
           schema:
             type: integer
       responses:
         '200':
-          description: OK
+          description: Successful response with a list of devices.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  links:
-                    type: object
-                    properties:
-                      prev:
-                        type: string
-                      first:
-                        type: string
-                      next:
-                        type: string
-                      self:
-                        type: string
-                  items:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uuid
-                        serialNumber:
-                          type: string
-                        model:
-                          type: string
-                        manufacturer:
-                          type: string
-                        firmware:
-                          type: string
-                        metadata:
-                          type: object
-                        description:
-                          type: string
-                          properties:
-                            createdBy:
-                              type: string
-                            createdAt:
-                              type: string
-                              format: date-time
-                            updatedBy:
-                              type: string
-                            updatedAt:
-                              type: string
-                              format: date-time
+                $ref: '#/components/schemas/DeviceListResponse'
   /devices/{deviceId}:
     patch:
       tags:
         - Device
       summary: Update Device
-      description: Update a Device
+      description: Update details of an existing device.
       parameters:
         - name: deviceId
           in: path
           required: true
+          description: Unique identifier of the device to be updated.
           schema:
             type: string
       requestBody:
         required: true
+        description: Object containing the updated details of the device.
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                serialNumber:
-                  type: string
-                model:
-                  type: string
-                manufacturer:
-                  type: string
-                firmware:
-                  type: string
-                description:
-                  type: string
-                
+              $ref: '#/components/schemas/DeviceCreateRequest'
       responses:
         '200':
-          description: OK
+          description: Device successfully updated.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  serialNumber:
-                    type: string
-                  model:
-                    type: string
-                  manufacturer:
-                    type: string
-                  firmware:
-                    type: string
-                  metadata:
-                    type: object
-                    properties:
-                      createdBy:
-                        type: string
-                      createdAt:
-                        type: string
-                        format: date-time
-                      updatedBy:
-                        type: string
-                      updatedAt:
-                        type: string
-                        format: date-time
+                $ref: '#/components/schemas/DeviceResponse'
     get:
       tags:
         - Device
       summary: Get Device
-      description: Retrieve a Device
+      description: Retrieve details of a specific device.
       parameters:
         - name: deviceId
           in: path
           required: true
+          description: Unique identifier of the device to be retrieved.
           schema:
             type: string
       responses:
         '200':
-          description: OK
+          description: Successful response with the device details.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  serialNumber:
-                    type: string
-                  model:
-                    type: string
-                  manufacturer:
-                    type: string
-                  firmware:
-                    type: string
-                  description:
-                    type: string
-                  metadata:
-                    type: object
-                    properties:
-                      createdBy:
-                        type: string
-                      createdAt:
-                        type: string
-                        format: date-time
-                      updatedBy:
-                        type: string
-                      updatedAt:
-                        type: string
-                        format: date-time
+                $ref: '#/components/schemas/DeviceResponse'
     delete:
       tags:
         - Device
       summary: Delete Device
-      description: Delete a Device
+      description: Delete a specific device.
       parameters:
         - name: deviceId
           in: path
           required: true
+          description: Unique identifier of the device to be deleted.
           schema:
             type: string
       responses:
         '204':
-          description: No Content
-
+          description: Device successfully deleted.
   /devices/{deviceId}/groups:
     get:
       tags:
-          - Group Association
+        - Group Association
       summary: Get Groups associated with Device
-      description: Get groups associated to a device
+      description: Retrieve the groups associated with a specific device.
       parameters:
         - name: deviceId
           in: path
           required: true
+          description: Unique identifier of the device.
           schema:
             type: string
       responses:
         '200':
-          description: OK
+          description: Successful response with the list of associated groups.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  links:
-                    type: object
-                    properties:
-                      prev:
-                        type: string
-                      first:
-                        type: string
-                      next:
-                        type: string
-                      self:
-                        type: string
-                  items:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uuid
-                        name:
-                          type: string
-                        metadata:
-                          type: object
-                          properties:
-                            createdBy:
-                              type: string
-                            createdAt:
-                              type: string
-                              format: date-time
-                            updatedBy:
-                              type: string
-                            updatedAt:
-                              type: string
-                              format: date-time
-
+                $ref: '#/components/schemas/GroupListResponse'
   /devices/{deviceId}/certificates:
     post:
       tags:
-          - Certificate Association
+        - Certificate Association
       summary: Associate Device with Certificate
-      description: Associate a Device with a certificate
+      description: Associate a device with a certificate.
       parameters:
         - name: deviceId
           in: path
           required: true
+          description: Unique identifier of the device.
           schema:
             type: string
       requestBody:
         required: true
+        description: Object containing the details of the certificate to be associated with the device.
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                certCommonName:
-                  type: string
-                csr:
-                  type: string
-                caCertOrigin:
-                  type: string
-                publicCert:
-                  type: string
+              $ref: '#/components/schemas/CertificateAssociationRequest'
             examples:
               "Cloud Core Certificate":
                 value:
-                  certCommonName: "commonName"
-              "CSR":
+                  certCommonName: "string"
+              "Certificate Signing Request":
                 value:
-                  csr: "csr"
+                  csr: "string"
               "External Certificate":
                 value:
-                  publicCert: "cert"
-                  caCertOrigin: "origin"
+                  publicCert: "string"
+                  caCertOrigin: "string"
       responses:
         '201':
-          description: Created
+          description: Certificate successfully associated with the device.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                  certificate:
-                    type: string
-                  name:
-                    type: string
-                  expiryAtDateTime:
-                    type: string
-                    format: date-time
-                  thumbprint:
-                    type: string
-                  metadata:
-                    type: object
-                    properties:
-                      createdBy:
-                        type: string
-                      createdAt:
-                        type: string
-                        format: date-
+                $ref: '#/components/schemas/CertificateResponse'
     get:
       tags:
-          - Certificate Association
+        - Certificate Association
       summary: Get Certificates associated with Device
-      description: Get certificates associated to a device
+      description: Retrieve the certificates associated with a specific device.
       parameters:
         - name: deviceId
           in: path
           required: true
+          description: Unique identifier of the device.
           schema:
             type: string
       responses:
         '200':
-          description: OK
+          description: Successful response with the list of associated certificates.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  links:
-                    type: object
-                    properties:
-                      prev:
-                        type: string
-                      first:
-                        type: string
-                      next:
-                        type: string
-                      self:
-                        type: string
-                  items:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          format: uuid
-                        certificate:
-                          type: string
-                        name:
-                          type: string
-                        expiryAtDateTime:
-                          type: string
-                          format: date-time
-                        thumbprint:
-                          type: string
-                        metadata:
-                          type: object
-                          properties:
-                            createdBy:
-                              type: string
-                            createdAt:
-                              type: string
-                              format: date-time
+                $ref: '#/components/schemas/CertificateListResponse'
   /devices/{deviceId}/certificates/{certificateId}:
     delete:
       tags:
-          - Certificate Association
+        - Certificate Association
       summary: Delete Certificate
-      description: Removes association of a device with certificate and deletes the certificate
+      description: Remove the association of a device with a certificate and delete the certificate.
       parameters:
         - name: deviceId
           in: path
           required: true
+          description: Unique identifier of the device.
           schema:
             type: string
             format: uuid
         - name: certificateId
           in: path
           required: true
+          description: Unique identifier of the certificate.
           schema:
             type: string
             format: uuid
       responses:
         '204':
-          description: No Content
+          description: Certificate successfully deleted.
+components:
+  schemas:
+    DeviceCreateRequest:
+      type: object
+      properties:
+        serialNumber:
+          type: string
+          description: Device Serial Number.
+        model:
+          type: string
+          description: Model to which the device belongs.
+        manufacturer:
+          type: string
+          description: Manufacturer associated with the device.
+        firmware:
+          type: string
+          description: Firmware details of the device.
+        description:
+          type: string
+          description: Short note about device details.
+    DeviceResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the device.
+        serialNumber:
+          type: string
+          description: Device Serial Number.
+        model:
+          type: string
+          description: Model to which the device belongs.
+        manufacturer:
+          type: string
+          description: Manufacturer associated with the device.
+        firmware:
+          type: string
+          description: Firmware details of the device.
+        description:
+          type: string
+          description: Short note about device details.
+        metadata:
+          type: object
+          properties:
+            createdBy:
+              type: string
+              description: Identifier of the subject who created the device.
+            createdAt:
+              type: string
+              format: date-time
+              description: Timestamp when the device was created.
+            updatedBy:
+              type: string
+              description: Identifier of the subject who last updated the device.
+            updatedAt:
+              type: string
+              format: date-time
+              description: Timestamp when the device was last updated.
+    DeviceListResponse:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            prev:
+              type: string
+              description: Link to the previous page of results.
+            first:
+              type: string
+              description: Link to the first page of results.
+            next:
+              type: string
+              description: Link to the next page of results.
+            self:
+              type: string
+              description: Link to the current page of results.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeviceResponse'
+    GroupListResponse:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            prev:
+              type: string
+              description: Link to the previous page of results.
+            first:
+              type: string
+              description: Link to the first page of results.
+            next:
+              type: string
+              description: Link to the next page of results.
+            self:
+              type: string
+              description: Link to the current page of results.
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: Unique identifier of the group.
+              name:
+                type: string
+                description: Name of the group.
+              metadata:
+                type: object
+                properties:
+                  createdBy:
+                    type: string
+                    description: Identifier of the subject who created the group.
+                  createdAt:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the group was created.
+                  updatedBy:
+                    type: string
+                    description: Identifier of the subject who last updated the group.
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    description: Timestamp when the group was last updated.
+    CertificateAssociationRequest:
+      type: object
+      properties:
+        certCommonName:
+          type: string
+          description: Common name of the certificate.
+        csr:
+          type: string
+          description: Certificate Signing Request (CSR).
+        caCertOrigin:
+          type: string
+          description: Origin of the Certificate Authority (CA) certificate.
+        publicCert:
+          type: string
+          description: Public certificate.
+    CertificateResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the certificate.
+        certificate:
+          type: string
+          description: Certificate details.
+        name:
+          type: string
+          description: Name of the certificate.
+        expiryAtDateTime:
+          type: string
+          format: date-time
+          description: Expiry date and time of the certificate.
+        thumbprint:
+          type: string
+          description: Thumbprint of the certificate.
+        metadata:
+          type: object
+          properties:
+            createdBy:
+              type: string
+              description: Identifier of the subject who created the certificate.
+            createdAt:
+              type: string
+              format: date-time
+              description: Timestamp when the certificate was created.
+    CertificateListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CertificateResponse'
